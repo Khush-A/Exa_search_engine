@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+  <div id="loading-spinner" class="spinner hidden"></div>
   <h1>Mini Search Engine</h1>
   <p>Backed by Exa – search the web and optionally filter by domain (e.g. <code>tiktok.com</code>).</p>
 
@@ -45,6 +46,7 @@
         </select>
 
         <button type="submit">Search</button>
+
         </div>
 
 
@@ -70,5 +72,14 @@
   {% elif query and not error %}
     <p>No results found.</p>
   {% endif %}
+
+<script>
+    const form = document.querySelector("form");
+    const spinner = document.getElementById("loading-spinner");
+
+    form.addEventListener("submit", () => {
+        spinner.classList.remove("hidden");
+    });
+</script>
 </body>
 </html>
