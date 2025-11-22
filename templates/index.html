@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mini Search Engine</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <h1>Mini Search Engine</h1>
+  <p>Backed by Exa – search the web and optionally filter by domain (e.g. <code>tiktok.com</code>).</p>
+
+  <form method="post">
+    <label for="query">Search query</label>
+    <input
+      type="text"
+      id="query"
+      name="query"
+      placeholder="e.g. best dinosaurs in the world"
+      value="{{ query }}"
+    />
+    <br>
+    <label for="num_results">Number of results</label>
+    <select id="num_results" name="num_results">
+    <option value="5" {% if num_results == 5 %}selected{% endif %}>5</option>
+    <option value="10" {% if num_results == 10 %}selected{% endif %}>10</option>
+    <option value="20" {% if num_results == 20 %}selected{% endif %}>20</option>
+    </select>
+    </br>
+
+    <label for="domain">Limit to domain (optional)</label>
+    <input
+      type="text"
+      id="domain"
+      name="domain"
+      placeholder="e.g. tiktok.com"
+      value="{{ domain }}"
+    />
+
+    <label for="mode">Mode</label>
+        <div class="actions-row">
+        <select id="mode" name="mode">
+            <option value="web"   {% if mode == 'web' %}selected{% endif %}>Web</option>
+            <option value="tiktok" {% if mode == 'tiktok' %}selected{% endif %}>TikTok</option>
+            <option value="youtube" {% if mode == 'youtube' %}selected{% endif %}>YouTube</option>
+        </select>
+
+        <button type="submit">Search</button>
+        </div>
+
+
+  </form>
+
+  {% if error %}
+    <div class="error">{{ error }}</div>
+  {% endif %}
+
+  {% if results %}
+    <h2>Results ({{ results|length }})</h2>
+    {% for r in results %}
+      <div class="result">
+        <div class="result-title">
+          <a href="{{ r.url }}" target="_blank" rel="noopener noreferrer">
+            {{ r.title or r.url }}
+          </a>
+        </div>
+        <div class="result-url">{{ r.url }}</div>
+        <!-- <div class="result-text">{{ r.text }}</div> -->
+      </div>
+    {% endfor %}
+  {% elif query and not error %}
+    <p>No results found.</p>
+  {% endif %}
+</body>
+</html>
