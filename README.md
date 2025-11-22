@@ -33,7 +33,6 @@ python3 app.py
 
 Then open your browser at http://127.0.0.1:5000
 
-
-Python 3.9+
-
-An Exa API key
+# Requires
+- Python 3.9+
+- An Exa API key
